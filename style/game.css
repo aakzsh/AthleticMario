@@ -1,0 +1,23 @@
+.container {
+    overflow: hidden;
+    margin-top: -2rem;
+    margin-left: -2rem;
+height: 102vh;
+width: 102vw;
+  }
+  
+  .sliding-background {
+    background: url("https://media.discordapp.net/attachments/873911486488121344/949928895824674866/Picsart_22-03-06_12-48-07-602.jpg") repeat-x;
+    height: 102vh;
+    width: 5076px;
+    animation: slide 60s linear infinite;
+  }
+  
+  @keyframes slide{
+    0% {
+      transform: translate3d(0, 0, 0);
+    }
+    100% {
+      transform: translate3d(-1692px, 0, 0);
+    }
+  }
