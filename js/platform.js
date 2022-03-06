@@ -1,4 +1,11 @@
 
+
+
+init().then(() => {
+
+
+    var clap = document.getElementById('bg')
+         
 var i = 0;
 
 var energy = 20;
@@ -117,7 +124,7 @@ Player.prototype.update = function() {
     InfiniteRunner.scoreColor = '#181818';
     InfiniteRunner.platformManager.maxDistanceBetween = 350;
     finalScore = score;
-    window.location.href='score.html?score='+score
+    // window.location.href='score.html?score='+score
 
     InfiniteRunner.platformManager.updateWhenLose();
 
@@ -335,20 +342,23 @@ var score = 0;
 function updateScore() {
   score++
   energy-=2
+
+//   console.log(parseFloat(clap.textContent) > 0, clap.textContent)
   
   if(energy<1){
-    window.location.href='score.html?score='+score
+    // window.location.href='score.html?score='+score
   }
 
   setTimeout(updateScore, 1000)
   console.log(score)
 }
 
+
 InfiniteRunner.setup = function () {
   updateScore()
   score = 0;
 
-
+    
   this.jumpCount = 0;
   this.aceleration = 0;
   this.acelerationTweening = 0;
@@ -409,12 +419,14 @@ InfiniteRunner.update = function() {
         this.player.x = this.collidedPlatform.x - 64;
         
         this.player.velocityY = -10 + -(this.aceleration * 4);
-        this.player.velocityX = -20 + -(this.aceleration * 4);
+        this.player.velocityX = -10 + -(this.aceleration * 4);
 
       } else {
 
 
-        if(this.dragging || this.keys.SPACE || this.keys.UP || this.keys.W){
+        if(this.dragging || this.keys.SPACE || this.keys.UP || this.keys.W || parseFloat(clap.textContent) > 0.7 ){
+            console.log("jump")
+            console.log(clap.textContent, parseFloat(clap.textContent),parseFloat(clap.textContent)>0 )
           this.player.velocityY = this.player.jumpSize;
           this.jumpCount++;
           if(this.jumpCount > this.jumpCountRecord){
@@ -447,6 +459,7 @@ InfiniteRunner.update = function() {
       } else {
 
         if(this.dragging || this.keys.SPACE || this.keys.UP || this.keys.W){
+            
           this.player.velocityY = this.player.jumpSize;
           this.jumpCount++;
           if(this.jumpCount > this.jumpCountRecord){
@@ -475,6 +488,7 @@ InfiniteRunner.update = function() {
 
 
 InfiniteRunner.draw = function(){
+    
   this.player.draw();
 
   for (i = 0; i < this.coinManager.coins.length; i++) {
@@ -496,3 +510,7 @@ InfiniteRunner.draw = function(){
 
 };
 
+
+
+
+  }) 
