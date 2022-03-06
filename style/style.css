@@ -4,6 +4,17 @@ html{
     font-family: 'Press Start 2P', cursive;
 }
 
+a {
+    text-decoration: none;
+    color: white;
+}
+
+.c {
+    margin-top: 4rem;
+    width: 70%;
+    line-height: 2;
+}
+
 .content{
     display: flex;
     /* background-color: pink; */
@@ -21,6 +32,7 @@ html{
 }
 
 .rules{
+    color: white;
     position: fixed;
     left: 2rem;
     cursor: pointer;
@@ -28,4 +40,18 @@ html{
 
 .rules:hover{
     color: yellow;
+}
+
+button {
+    border: none;
+
+    background-color: rgb(74, 74, 201);
+    padding: 0.75rem 3rem;
+    border-radius: 5px;
+    color: white;
+}
+
+button:hover {
+    opacity: 0.7;
+    transform: scale(1.05);
 }

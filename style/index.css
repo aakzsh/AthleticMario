@@ -1,5 +1,9 @@
 body{
-    background-color: rebeccapurple;
+    background-color: #181818;
+}
+
+p, h1 {
+    color: white;
 }
 
 

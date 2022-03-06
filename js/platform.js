@@ -124,7 +124,7 @@ Player.prototype.update = function() {
     InfiniteRunner.scoreColor = '#181818';
     InfiniteRunner.platformManager.maxDistanceBetween = 350;
     finalScore = score;
-    // window.location.href='score.html?score='+score
+    window.location.href='score.html?score='+score
 
     InfiniteRunner.platformManager.updateWhenLose();
 
@@ -346,7 +346,7 @@ function updateScore() {
 //   console.log(parseFloat(clap.textContent) > 0, clap.textContent)
   
   if(energy<1){
-    // window.location.href='score.html?score='+score
+    window.location.href='score.html?score='+score
   }
 
   setTimeout(updateScore, 1000)
@@ -502,9 +502,9 @@ InfiniteRunner.draw = function(){
   
 
   this.font = '12pt Arial';
-  this.fillStyle = '#181818';
+  this.fillStyle = '#ffffff';
   this.fillText('ENERGY REMAINING: '+energy, 10, 20);
-  this.fillStyle = this.scoreColor;
+  this.fillStyle = "#ffffff";
   // this.font = (12 + (this.aceleration * 3))+'pt Arial';
   this.fillText('SCORE: '+score, this.width - (100 + (this.aceleration * 4)), 20);
 
