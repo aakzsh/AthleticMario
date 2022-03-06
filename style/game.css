@@ -8,8 +8,13 @@ body{
 #container{
   margin-top: 10%;
   display: inline-block;
+  transform: scale(1.5);
 }
 canvas{
   background: #cecece;
   border: 1px solid #181818;
+}
+
+#scoreFinal{
+    display: none;
 }

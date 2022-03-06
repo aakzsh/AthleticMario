@@ -1,6 +1,8 @@
 
 var i = 0;
 
+var energy = 20;
+
 function random( min, max ) {
   return Math.round( min + ( Math.random() * ( max - min ) ) );
 }
@@ -15,6 +17,7 @@ var InfiniteRunner = Sketch.create({
   height: 360,
   container: document.getElementById('container')
 });
+
 
 
 
@@ -95,6 +98,8 @@ function Player(options){
 
 }
 
+var finalScore = 0;
+
 Player.prototype = new Vector2;
 
 Player.prototype.update = function() {
@@ -111,7 +116,13 @@ Player.prototype.update = function() {
     InfiniteRunner.acelerationTweening = 0;
     InfiniteRunner.scoreColor = '#181818';
     InfiniteRunner.platformManager.maxDistanceBetween = 350;
+    finalScore = score;
+    window.location.href='score.html?score='+score
+
     InfiniteRunner.platformManager.updateWhenLose();
+
+   
+
   }
 
   if((InfiniteRunner.keys.UP || InfiniteRunner.keys.SPACE || InfiniteRunner.keys.W || InfiniteRunner.dragging) && this.velocityY < -8){
@@ -120,9 +131,19 @@ Player.prototype.update = function() {
 
 };
 
+var im = new Image();
+im.src = "./assets/mario.png";
+bg = new Image()
+bg.src='./assets/bg.png'
+
+  
+
 Player.prototype.draw = function() {
-  InfiniteRunner.fillStyle = this.color;
-  InfiniteRunner.fillRect(this.x, this.y, this.width, this.height);
+  InfiniteRunner.drawImage(bg, 0, 0, InfiniteRunner.width, InfiniteRunner.height)
+  // InfiniteRunner.fillStyle = this.color;
+  InfiniteRunner.drawImage(im, this.x, this.y-22, 50, 50)
+  // InfiniteRunner.fillRect(this.x, this.y, this.width, this.height);
+  
 };
 
 /*******************/
@@ -136,16 +157,19 @@ function Coin(options){
     this.previousX = 0;
     this.previousY = 0;
     this.color = '#ff0000';
+  
   }
 
-
-  Coin.prototype = new Vector2;
+apple = new Image()
+apple.src = './assets/apple.svg'
+Coin.prototype = new Vector2;
 
   Coin.prototype.draw = function() {
     
       InfiniteRunner.fillStyle = this.color;
-      InfiniteRunner.fillRect(this.x, this.y, this.width, this.height);
-      InfiniteRunner.image= new Image(InfiniteRunner.fruit, this.x, this.y,  this.width, this.height );
+      // InfiniteRunner.fillRect(this.x, this.y, this.width, this.height);
+      InfiniteRunner.drawImage(apple, this.x-15, this.y-15, 50, 50)
+      // InfiniteRunner.image= new Image(InfiniteRunner.fruit, this.x, this.y,  this.width, this.height );
   
   };
   
@@ -162,21 +186,37 @@ function Platform(options){
   this.previousX = 0;
   this.previousY = 0;
   this.color = options.color;
+
+  
 }
+
+crack = new Image()
+
 
 Platform.prototype = new Vector2;
 
+// lmassssssssss
 Platform.prototype.draw = function() {
+  // crack.src = bricksrc.random()
+  // var x = Math.trunc(Math.random()*10)%3;
+  crack.src = bricksrc[0]
   InfiniteRunner.fillStyle = this.color;
   InfiniteRunner.fillRect(this.x, this.y, this.width, this.height);
+  InfiniteRunner.drawImage(crack, this.x, this.y, this.width, this.height)
+
+  
 
 };
+
+
+bricksrc = ['./assets/brick1.png', './assets/brick2.png', './assets/brick3.png']
 
 /*******************PLATFORM MANAGER*************/
 
 function PlatformManager(){
   this.maxDistanceBetween = 300;
   this.colors = ['#2ca8c2', '#98cb4a', '#f76d3c', '#f15f74','#5481e6'];
+
 
   this.first = new Platform({x: 300, y: InfiniteRunner.width / 2, width: 400, height: 70})
   this.second = new Platform({x: (this.first.x + this.first.width) + random(this.maxDistanceBetween - 150, this.maxDistanceBetween), y: random(this.first.y - 128, InfiniteRunner.height - 80), width: 400, height: 70})
@@ -233,7 +273,7 @@ function CoinManager(){
     this.maxDistanceBetween = 300;
     this.colors = ['#2ca8c2', '#98cb4a', '#f76d3c', '#f15f74','#5481e6'];
   
-    this.first = new Coin({x: 300, y: InfiniteRunner.width / 2, width: 30, height: 30})
+    this.first = new Coin({x: 300, y: InfiniteRunner.width / 2 + 50, width: 30, height: 30})
     this.second = new Coin({x: (this.first.x + this.first.width) + random(this.maxDistanceBetween - 150, this.maxDistanceBetween), y: random(this.first.y - 128, InfiniteRunner.height - 80), width: 30, height: 30})
     this.third = new Coin({x: (this.second.x + this.second.width) + random(this.maxDistanceBetween - 150, this.maxDistanceBetween), y: random(this.second.y - 128, InfiniteRunner.height - 80), width: 30, height: 30})
   
@@ -290,7 +330,24 @@ InfiniteRunner.preload = function(){
     this.fruit = loadImage('../assets/apple.svg')
 }
 
+var score = 0;
+
+function updateScore() {
+  score++
+  energy-=2
+  
+  if(energy<1){
+    window.location.href='score.html?score='+score
+  }
+
+  setTimeout(updateScore, 1000)
+  console.log(score)
+}
+
 InfiniteRunner.setup = function () {
+  updateScore()
+  score = 0;
+
 
   this.jumpCount = 0;
   this.aceleration = 0;
@@ -332,11 +389,15 @@ InfiniteRunner.update = function() {
   this.aceleration += (this.acelerationTweening - this.aceleration) * 0.01;
 
   for (i = 0; i < this.platformManager.platforms.length; i++) {
+
     if(this.player.insercects(this.platformManager.platforms[i])){
+
+      console.log("haar gaye lmaoo")
       this.collidedPlatform = this.platformManager.platforms[i];
       if (this.player.y < this.platformManager.platforms[i].y) {
         this.player.y = this.platformManager.platforms[i].y;
         this.player.velocityY = 0;
+        
       }
 
       this.player.x = this.player.previousX;
@@ -352,11 +413,13 @@ InfiniteRunner.update = function() {
 
       } else {
 
+
         if(this.dragging || this.keys.SPACE || this.keys.UP || this.keys.W){
           this.player.velocityY = this.player.jumpSize;
           this.jumpCount++;
           if(this.jumpCount > this.jumpCountRecord){
             this.jumpCountRecord = this.jumpCount;
+            // this.score ++;
           }
         }
 
@@ -380,7 +443,7 @@ InfiniteRunner.update = function() {
 
       if(this.player.insercectsLeft(this.coinManager.coins[i])){
         this.coinManager.coins[i].x = -1;
-
+         energy+=5;
       } else {
 
         if(this.dragging || this.keys.SPACE || this.keys.UP || this.keys.W){
@@ -426,10 +489,10 @@ InfiniteRunner.draw = function(){
 
   this.font = '12pt Arial';
   this.fillStyle = '#181818';
-  this.fillText('RECORD: '+this.jumpCountRecord, this.width - (150 + (this.aceleration * 4)), 33 - (this.aceleration * 4));
+  this.fillText('ENERGY REMAINING: '+energy, 10, 20);
   this.fillStyle = this.scoreColor;
-  this.font = (12 + (this.aceleration * 3))+'pt Arial';
-  this.fillText('JUMPS: '+this.jumpCount, this.width - (150 + (this.aceleration * 4)), 50);
+  // this.font = (12 + (this.aceleration * 3))+'pt Arial';
+  this.fillText('SCORE: '+score, this.width - (100 + (this.aceleration * 4)), 20);
 
 };
 
