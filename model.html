@@ -9,11 +9,11 @@
     // https://github.com/tensorflow/tfjs-models/tree/master/speech-commands
 
     // the link to your model provided by Teachable Machine export panel
-    const URL = "https://github.com/aakzsh/AthleticMario/tree/master/assets/model/";
+    const URL = "https://teachablemachine.withgoogle.com/models/N9yK8Gveu/";
 
     async function createModel() {
-        const checkpointURL =  "https://firebasestorage.googleapis.com/v0/b/haunt-4.appspot.com/o/model.json?alt=media&token=dae46e78-0ae0-4dce-aeda-031ee9dc9891"; // model topology
-        const metadataURL = "https://firebasestorage.googleapis.com/v0/b/haunt-4.appspot.com/o/metadata.json?alt=media&token=dae46e78-0ae0-4dce-aeda-031ee9dc9891"; // model metadata
+        const checkpointURL = URL+  "model.json"; // model topology
+        const metadataURL = URL+"metadata.json"; // model metadata
 
         const recognizer = speechCommands.create(
             "BROWSER_FFT", // fourier transform type, not useful to change
