@@ -139,7 +139,7 @@ Player.prototype.update = function() {
 };
 
 var im = new Image();
-im.src = "./assets/mario.png";
+im.src = "./assets/mario.gif";
 bg = new Image()
 bg.src='./assets/bg.png'
 

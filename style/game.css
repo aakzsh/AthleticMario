@@ -1,5 +1,5 @@
 body{
-  background: #e3e3e3;
+  background-color: #181818;
   overflow: hidden;
   margin: 0;
   padding: 0;
@@ -17,4 +17,8 @@ canvas{
 
 #scoreFinal{
     display: none;
+}
+
+#bg {
+  display:none
 }
